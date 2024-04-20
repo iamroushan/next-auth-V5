@@ -10,7 +10,7 @@ import { generateVerificationToken } from "@/lib/tokens"
 import { validateHeaderValue } from "http"
 import { sendVerificationEmail } from "@/lib/mail"
 import bcrypt from "bcryptjs"
-import { update } from "@/auth"
+// import { update } from "@/auth"
 
 export const settings = async (
     values: z.infer<typeof SettingsSchema>
@@ -23,7 +23,7 @@ export const settings = async (
         }
     }
 
-    const dbUser = await getUserById(user.id)
+    const dbUser = await getUserById(user.id as string)
 
     if(!dbUser){
         return {
@@ -87,14 +87,14 @@ export const settings = async (
         }
     })
 
-    update({
-        user: {
-            name: updatedUser.name,
-            email: updatedUser.email,
-            isTwoFactorEnabled: updatedUser.isTwoFactorEnabled,
-            role: updatedUser.role,
-        } 
-    })
+    // update({
+    //     user: {
+    //         name: updatedUser.name,
+    //         email: updatedUser.email,
+    //         isTwoFactorEnabled: updatedUser.isTwoFactorEnabled,
+    //         role: updatedUser.role,
+    //     } 
+    // })
 
     return {
         success: "Settings Updated!"
