@@ -25,6 +25,7 @@ import Link from "next/link"
 
 export const LoginForm = () => {
     const searchParams = useSearchParams()
+    const callbackUrl = searchParams.get("callbackUrl")
     const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "Emali already in use with different provider!" : ""
 
     const [showTwoFactor, setShowTwoFactor] = useState(false)
@@ -45,7 +46,7 @@ export const LoginForm = () => {
         setSuccess("")
 
         startTransition(() => {
-            login(values)  // server actions
+            login(values, callbackUrl)  // server actions
             .then((data) => {
                 if(data?.error){
                     form.reset()
